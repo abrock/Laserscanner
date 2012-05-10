@@ -1,0 +1,278 @@
+   1               		.file	"usart.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	usart0_init
+  18               	usart0_init:
+  19               	.LFB0:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	/* stack size = 0 */
+  24               	.L__stack_usage = 0
+  25               	.LM2:
+  26 0000 89E1      		ldi r24,lo8(25)
+  27 0002 8093 C400 		sts 196,r24
+  28               	.LM3:
+  29 0006 1092 C500 		sts 197,__zero_reg__
+  30               	.LM4:
+  31 000a 88E9      		ldi r24,lo8(-104)
+  32 000c 8093 C100 		sts 193,r24
+  33               	.LM5:
+  34 0010 86E0      		ldi r24,lo8(6)
+  35 0012 8093 C200 		sts 194,r24
+  36               	.LM6:
+  37 0016 1092 0000 		sts USART0_RxTail,__zero_reg__
+  38               	.LM7:
+  39 001a 1092 0000 		sts USART0_RxHead,__zero_reg__
+  40               	.LM8:
+  41 001e 1092 0000 		sts USART0_TxTail,__zero_reg__
+  42               	.LM9:
+  43 0022 1092 0000 		sts USART0_TxHead,__zero_reg__
+  44               	/* epilogue start */
+  45               	.LM10:
+  46 0026 0895      		ret
+  47               	.LFE0:
+  49               	.global	__vector_20
+  51               	__vector_20:
+  52               	.LFB1:
+  53               	.LM11:
+  54 0028 1F92      		push __zero_reg__
+  55 002a 0F92      		push r0
+  56 002c 0FB6      		in r0,__SREG__
+  57 002e 0F92      		push r0
+  58 0030 1124      		clr __zero_reg__
+  59 0032 8F93      		push r24
+  60 0034 9F93      		push r25
+  61 0036 EF93      		push r30
+  62 0038 FF93      		push r31
+  63               	/* prologue: Signal */
+  64               	/* frame size = 0 */
+  65               	/* stack size = 7 */
+  66               	.L__stack_usage = 7
+  67               	.LM12:
+  68 003a 9091 C600 		lds r25,198
+  69               	.LVL0:
+  70               	.LM13:
+  71 003e 8091 0000 		lds r24,USART0_RxHead
+  72 0042 8F5F      		subi r24,lo8(-(1))
+  73 0044 8F71      		andi r24,lo8(31)
+  74               	.LVL1:
+  75               	.LM14:
+  76 0046 8093 0000 		sts USART0_RxHead,r24
+  77               	.LM15:
+  78 004a E0E0      		ldi r30,lo8(USART0_RxBuf)
+  79 004c F0E0      		ldi r31,hi8(USART0_RxBuf)
+  80 004e E80F      		add r30,r24
+  81 0050 F11D      		adc r31,__zero_reg__
+  82 0052 9083      		st Z,r25
+  83               	/* epilogue start */
+  84               	.LM16:
+  85 0054 FF91      		pop r31
+  86 0056 EF91      		pop r30
+  87 0058 9F91      		pop r25
+  88               	.LVL2:
+  89 005a 8F91      		pop r24
+  90               	.LVL3:
+  91 005c 0F90      		pop r0
+  92 005e 0FBE      		out __SREG__,r0
+  93 0060 0F90      		pop r0
+  94 0062 1F90      		pop __zero_reg__
+  95 0064 1895      		reti
+  96               	.LFE1:
+  98               	.global	__vector_21
+ 100               	__vector_21:
+ 101               	.LFB2:
+ 102               	.LM17:
+ 103 0066 1F92      		push __zero_reg__
+ 104 0068 0F92      		push r0
+ 105 006a 0FB6      		in r0,__SREG__
+ 106 006c 0F92      		push r0
+ 107 006e 1124      		clr __zero_reg__
+ 108 0070 8F93      		push r24
+ 109 0072 9F93      		push r25
+ 110 0074 EF93      		push r30
+ 111 0076 FF93      		push r31
+ 112               	/* prologue: Signal */
+ 113               	/* frame size = 0 */
+ 114               	/* stack size = 7 */
+ 115               	.L__stack_usage = 7
+ 116               	.LM18:
+ 117 0078 9091 0000 		lds r25,USART0_TxHead
+ 118 007c 8091 0000 		lds r24,USART0_TxTail
+ 119 0080 9817      		cp r25,r24
+ 120 0082 01F0      		breq .L4
+ 121               	.LM19:
+ 122 0084 E091 0000 		lds r30,USART0_TxTail
+ 123 0088 EF5F      		subi r30,lo8(-(1))
+ 124 008a EF71      		andi r30,lo8(31)
+ 125               	.LVL4:
+ 126               	.LM20:
+ 127 008c E093 0000 		sts USART0_TxTail,r30
+ 128               	.LM21:
+ 129 0090 F0E0      		ldi r31,lo8(0)
+ 130 0092 E050      		subi r30,lo8(-(USART0_TxBuf))
+ 131 0094 F040      		sbci r31,hi8(-(USART0_TxBuf))
+ 132               	.LVL5:
+ 133 0096 8081      		ld r24,Z
+ 134 0098 8093 C600 		sts 198,r24
+ 135 009c 00C0      		rjmp .L3
+ 136               	.LVL6:
+ 137               	.L4:
+ 138               	.LM22:
+ 139 009e 8091 C100 		lds r24,193
+ 140 00a2 8F7D      		andi r24,lo8(-33)
+ 141 00a4 8093 C100 		sts 193,r24
+ 142               	.L3:
+ 143               	/* epilogue start */
+ 144               	.LM23:
+ 145 00a8 FF91      		pop r31
+ 146 00aa EF91      		pop r30
+ 147 00ac 9F91      		pop r25
+ 148 00ae 8F91      		pop r24
+ 149 00b0 0F90      		pop r0
+ 150 00b2 0FBE      		out __SREG__,r0
+ 151 00b4 0F90      		pop r0
+ 152 00b6 1F90      		pop __zero_reg__
+ 153 00b8 1895      		reti
+ 154               	.LFE2:
+ 156               	.global	usart0_getc
+ 158               	usart0_getc:
+ 159               	.LFB3:
+ 160               	.LM24:
+ 161               	/* prologue: function */
+ 162               	/* frame size = 0 */
+ 163               	/* stack size = 0 */
+ 164               	.L__stack_usage = 0
+ 165               	.L7:
+ 166               	.LM25:
+ 167 00ba 9091 0000 		lds r25,USART0_RxHead
+ 168 00be 8091 0000 		lds r24,USART0_RxTail
+ 169 00c2 9817      		cp r25,r24
+ 170 00c4 01F0      		breq .L7
+ 171               	.LM26:
+ 172 00c6 E091 0000 		lds r30,USART0_RxTail
+ 173 00ca EF5F      		subi r30,lo8(-(1))
+ 174 00cc EF71      		andi r30,lo8(31)
+ 175               	.LVL7:
+ 176               	.LM27:
+ 177 00ce E093 0000 		sts USART0_RxTail,r30
+ 178               	.LM28:
+ 179 00d2 F0E0      		ldi r31,lo8(0)
+ 180 00d4 E050      		subi r30,lo8(-(USART0_RxBuf))
+ 181 00d6 F040      		sbci r31,hi8(-(USART0_RxBuf))
+ 182               	.LVL8:
+ 183               	.LM29:
+ 184 00d8 8081      		ld r24,Z
+ 185               	/* epilogue start */
+ 186 00da 0895      		ret
+ 187               	.LFE3:
+ 189               	.global	usart0_hasc
+ 191               	usart0_hasc:
+ 192               	.LFB4:
+ 193               	.LM30:
+ 194               	/* prologue: function */
+ 195               	/* frame size = 0 */
+ 196               	/* stack size = 0 */
+ 197               	.L__stack_usage = 0
+ 198               	.LM31:
+ 199 00dc 2091 0000 		lds r18,USART0_RxHead
+ 200 00e0 9091 0000 		lds r25,USART0_RxTail
+ 201 00e4 81E0      		ldi r24,lo8(1)
+ 202 00e6 2917      		cp r18,r25
+ 203 00e8 01F4      		brne .L10
+ 204 00ea 80E0      		ldi r24,lo8(0)
+ 205               	.L10:
+ 206               	.LM32:
+ 207 00ec 0895      		ret
+ 208               	.LFE4:
+ 210               	.global	usart0_putc
+ 212               	usart0_putc:
+ 213               	.LFB5:
+ 214               	.LM33:
+ 215               	.LVL9:
+ 216               	/* prologue: function */
+ 217               	/* frame size = 0 */
+ 218               	/* stack size = 0 */
+ 219               	.L__stack_usage = 0
+ 220               	.LM34:
+ 221 00ee 9091 0000 		lds r25,USART0_TxHead
+ 222 00f2 9F5F      		subi r25,lo8(-(1))
+ 223 00f4 9F71      		andi r25,lo8(31)
+ 224               	.LVL10:
+ 225               	.L12:
+ 226               	.LM35:
+ 227 00f6 2091 0000 		lds r18,USART0_TxTail
+ 228 00fa 9217      		cp r25,r18
+ 229 00fc 01F0      		breq .L12
+ 230               	.LM36:
+ 231 00fe E92F      		mov r30,r25
+ 232 0100 F0E0      		ldi r31,lo8(0)
+ 233 0102 E050      		subi r30,lo8(-(USART0_TxBuf))
+ 234 0104 F040      		sbci r31,hi8(-(USART0_TxBuf))
+ 235 0106 8083      		st Z,r24
+ 236               	.LM37:
+ 237 0108 9093 0000 		sts USART0_TxHead,r25
+ 238               	.LM38:
+ 239 010c 8091 C100 		lds r24,193
+ 240               	.LVL11:
+ 241 0110 8062      		ori r24,lo8(32)
+ 242 0112 8093 C100 		sts 193,r24
+ 243               	/* epilogue start */
+ 244               	.LM39:
+ 245 0116 0895      		ret
+ 246               	.LFE5:
+ 248               	.global	usart0_data_received
+ 250               	usart0_data_received:
+ 251               	.LFB6:
+ 252               	.LM40:
+ 253               	/* prologue: function */
+ 254               	/* frame size = 0 */
+ 255               	/* stack size = 0 */
+ 256               	.L__stack_usage = 0
+ 257               	.LM41:
+ 258 0118 2091 0000 		lds r18,USART0_RxHead
+ 259 011c 9091 0000 		lds r25,USART0_RxTail
+ 260 0120 81E0      		ldi r24,lo8(1)
+ 261 0122 2917      		cp r18,r25
+ 262 0124 01F4      		brne .L15
+ 263 0126 80E0      		ldi r24,lo8(0)
+ 264               	.L15:
+ 265               	.LM42:
+ 266 0128 0895      		ret
+ 267               	.LFE6:
+ 269               		.lcomm USART0_RxHead,1
+ 270               		.lcomm USART0_RxTail,1
+ 271               		.lcomm USART0_TxHead,1
+ 272               		.lcomm USART0_TxTail,1
+ 273               		.lcomm USART0_TxBuf,32
+ 274               		.lcomm USART0_RxBuf,32
+ 347               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 usart.c
+     /tmp/ccTQs6r5.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccTQs6r5.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccTQs6r5.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccTQs6r5.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccTQs6r5.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccTQs6r5.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccTQs6r5.s:18     .text:00000000 usart0_init
+     /tmp/ccTQs6r5.s:269    .bss:00000001 USART0_RxTail
+                             .bss:00000000 USART0_RxHead
+     /tmp/ccTQs6r5.s:271    .bss:00000003 USART0_TxTail
+     /tmp/ccTQs6r5.s:270    .bss:00000002 USART0_TxHead
+     /tmp/ccTQs6r5.s:51     .text:00000028 __vector_20
+     /tmp/ccTQs6r5.s:273    .bss:00000024 USART0_RxBuf
+     /tmp/ccTQs6r5.s:100    .text:00000066 __vector_21
+     /tmp/ccTQs6r5.s:272    .bss:00000004 USART0_TxBuf
+     /tmp/ccTQs6r5.s:158    .text:000000ba usart0_getc
+     /tmp/ccTQs6r5.s:191    .text:000000dc usart0_hasc
+     /tmp/ccTQs6r5.s:212    .text:000000ee usart0_putc
+     /tmp/ccTQs6r5.s:250    .text:00000118 usart0_data_received
+
+UNDEFINED SYMBOLS
+__do_clear_bss
