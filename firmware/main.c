@@ -81,9 +81,13 @@ void step_turntable_left() {
 }
 
 void setup_inputs() {
-	// Configure PA0 as input, enable pullup.
+	// Configure PA0 as output enable laser.
 	DDRA  |= (1 << 0);
 	PORTA |= (1 << 0);
+
+	// Configure endstop pin for laser.
+	DDRA  |= (1 << 1);
+	PORTA |= (1 << 1);
 }
 
 void home_laser() {

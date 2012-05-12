@@ -375,424 +375,428 @@
  399 0188 089A      		sbi 33-32,0
  400               	.LM54:
  401 018a 109A      		sbi 34-32,0
- 402               	/* epilogue start */
- 403               	.LM55:
- 404 018c 0895      		ret
- 405               	.LFE14:
- 407               	.global	home_laser
- 409               	home_laser:
- 410               	.LFB15:
- 411               	.LM56:
- 412               	/* prologue: function */
- 413               	/* frame size = 0 */
- 414               	/* stack size = 0 */
- 415               	.L__stack_usage = 0
- 416               	.LM57:
- 417 018e 00C0      		rjmp .L21
- 418               	.L22:
- 419               	.LM58:
- 420 0190 0E94 0000 		call step_laser_left
- 421               	.LVL28:
- 422               	.LBB45:
- 423               	.LBB46:
- 424               	.LM59:
- 425 0194 8FE9      		 ldi r24,lo8(3999)
- 426 0196 9FE0      	    ldi r25,hi8(3999)
- 427 0198 0197      	    1:sbiw r24,1
- 428 019a 01F4      	    brne 1b
- 429 019c 00C0      		rjmp .
- 430 019e 0000      		nop
- 431               	.LVL29:
- 432               	.L21:
- 433               	.LBE46:
- 434               	.LBE45:
- 435               	.LM60:
- 436 01a0 0099      		sbic 32-32,0
- 437 01a2 00C0      		rjmp .L22
- 438               	.LM61:
- 439 01a4 1092 0000 		sts laser_pos,__zero_reg__
- 440 01a8 1092 0000 		sts laser_pos+1,__zero_reg__
- 441 01ac 1092 0000 		sts laser_pos+2,__zero_reg__
- 442 01b0 1092 0000 		sts laser_pos+3,__zero_reg__
- 443               	/* epilogue start */
- 444               	.LM62:
- 445 01b4 0895      		ret
- 446               	.LFE15:
- 448               		.data
- 449               	.LC0:
- 450 0000 5072 6F63 		.string	"Processing message home\r\n"
- 450      6573 7369 
- 450      6E67 206D 
- 450      6573 7361 
- 450      6765 2068 
- 451               	.LC1:
- 452 001a 7265 6376 		.string	"recv_buffer: "
- 452      5F62 7566 
- 452      6665 723A 
- 452      2000 
- 453               	.LC2:
- 454 0028 0D0A 00   		.string	"\r\n"
- 455               	.LC3:
- 456 002b 486F 6D69 		.string	"Homing laser\r\n"
- 456      6E67 206C 
- 456      6173 6572 
- 456      0D0A 00
- 457               	.LC4:
- 458 003a 4C61 7365 		.string	"Laser homed\r\n"
- 458      7220 686F 
- 458      6D65 640D 
- 458      0A00 
- 459               		.text
- 460               	.global	process_home
- 462               	process_home:
- 463               	.LFB16:
- 464               	.LM63:
- 465               	/* prologue: function */
- 466               	/* frame size = 0 */
- 467               	/* stack size = 0 */
- 468               	.L__stack_usage = 0
- 469               	.LM64:
- 470 01b6 80E0      		ldi r24,lo8(.LC0)
- 471 01b8 90E0      		ldi r25,hi8(.LC0)
- 472 01ba 0E94 0000 		call usart0_puts
- 473               	.LM65:
- 474 01be 80E0      		ldi r24,lo8(.LC1)
- 475 01c0 90E0      		ldi r25,hi8(.LC1)
- 476 01c2 0E94 0000 		call usart0_puts
- 477               	.LM66:
- 478 01c6 80E0      		ldi r24,lo8(recv_buffer)
- 479 01c8 90E0      		ldi r25,hi8(recv_buffer)
- 480 01ca 0E94 0000 		call usart0_puts
- 481               	.LM67:
- 482 01ce 80E0      		ldi r24,lo8(.LC2)
- 483 01d0 90E0      		ldi r25,hi8(.LC2)
- 484 01d2 0E94 0000 		call usart0_puts
- 485               	.LVL30:
- 486 01d6 80E0      		ldi r24,lo8(0)
- 487 01d8 90E0      		ldi r25,hi8(0)
- 488               	.LVL31:
- 489               	.L25:
- 490               	.LBB47:
- 491               	.LM68:
- 492 01da FC01      		movw r30,r24
- 493 01dc E050      		subi r30,lo8(-(recv_buffer))
- 494 01de F040      		sbci r31,hi8(-(recv_buffer))
- 495 01e0 2081      		ld r18,Z
- 496 01e2 2834      		cpi r18,lo8(72)
- 497 01e4 01F4      		brne .L23
- 498 01e6 0196      		adiw r24,1
- 499               	.LM69:
- 500 01e8 8630      		cpi r24,6
- 501 01ea 9105      		cpc r25,__zero_reg__
- 502 01ec 01F4      		brne .L25
- 503               	.LBE47:
- 504               	.LM70:
- 505 01ee 80E0      		ldi r24,lo8(.LC3)
- 506 01f0 90E0      		ldi r25,hi8(.LC3)
- 507 01f2 0E94 0000 		call usart0_puts
- 508               	.LM71:
- 509 01f6 0E94 0000 		call home_laser
- 510               	.LM72:
- 511 01fa 80E0      		ldi r24,lo8(.LC4)
- 512 01fc 90E0      		ldi r25,hi8(.LC4)
- 513 01fe 0E94 0000 		call usart0_puts
- 514               	.L23:
- 515 0202 0895      		ret
- 516               	.LFE16:
- 518               		.data
- 519               	.LC5:
- 520 0048 4E65 7720 		.string	"New laser destination set\r\n"
- 520      6C61 7365 
- 520      7220 6465 
- 520      7374 696E 
- 520      6174 696F 
- 521               		.text
- 522               	.global	process_laser
- 524               	process_laser:
- 525               	.LFB17:
- 526               	.LM73:
- 527               	/* prologue: function */
- 528               	/* frame size = 0 */
- 529               	/* stack size = 0 */
- 530               	.L__stack_usage = 0
- 531               	.LM74:
- 532 0204 2091 0000 		lds r18,recv_buffer+4
- 533 0208 8091 0000 		lds r24,recv_buffer+3
- 534 020c 90E0      		ldi r25,lo8(0)
- 535 020e A0E0      		ldi r26,lo8(0)
- 536 0210 B0E0      		ldi r27,hi8(0)
- 537 0212 BA2F      		mov r27,r26
- 538 0214 A92F      		mov r26,r25
- 539 0216 982F      		mov r25,r24
- 540 0218 8827      		clr r24
- 541 021a 30E0      		ldi r19,lo8(0)
- 542 021c 40E0      		ldi r20,lo8(0)
- 543 021e 50E0      		ldi r21,hi8(0)
- 544 0220 822B      		or r24,r18
- 545 0222 932B      		or r25,r19
- 546 0224 A42B      		or r26,r20
- 547 0226 B52B      		or r27,r21
- 548 0228 8093 0000 		sts laser_dest,r24
- 549 022c 9093 0000 		sts laser_dest+1,r25
- 550 0230 A093 0000 		sts laser_dest+2,r26
- 551 0234 B093 0000 		sts laser_dest+3,r27
- 552               	.LM75:
- 553 0238 80E0      		ldi r24,lo8(.LC5)
- 554 023a 90E0      		ldi r25,hi8(.LC5)
- 555 023c 0E94 0000 		call usart0_puts
- 556               	/* epilogue start */
- 557               	.LM76:
- 558 0240 0895      		ret
- 559               	.LFE17:
- 561               		.data
- 562               	.LC6:
- 563 0064 5072 6F63 		.string	"Processing message\r\n"
- 563      6573 7369 
- 563      6E67 206D 
- 563      6573 7361 
- 563      6765 0D0A 
- 564               		.text
- 565               	.global	process_message
- 567               	process_message:
- 568               	.LFB18:
- 569               	.LM77:
- 570               	/* prologue: function */
- 571               	/* frame size = 0 */
- 572               	/* stack size = 0 */
- 573               	.L__stack_usage = 0
- 574               	.LM78:
- 575 0242 80E0      		ldi r24,lo8(.LC6)
- 576 0244 90E0      		ldi r25,hi8(.LC6)
- 577 0246 0E94 0000 		call usart0_puts
- 578               	.LM79:
- 579 024a 8091 0000 		lds r24,recv_buffer
- 580 024e 8834      		cpi r24,lo8(72)
- 581 0250 01F0      		breq .L30
- 582 0252 8C34      		cpi r24,lo8(76)
- 583 0254 01F4      		brne .L28
- 584 0256 00C0      		rjmp .L32
- 585               	.L30:
- 586               	.LM80:
- 587 0258 0E94 0000 		call process_home
- 588 025c 0895      		ret
- 589               	.L32:
- 590               	.LM81:
- 591 025e 0E94 0000 		call process_laser
- 592               	.L28:
- 593 0262 0895      		ret
- 594               	.LFE18:
- 596               	.global	main
- 598               	main:
- 599               	.LFB19:
- 600               	.LM82:
- 601 0264 CF93      		push r28
- 602 0266 DF93      		push r29
- 603               	/* prologue: function */
- 604               	/* frame size = 0 */
- 605               	/* stack size = 2 */
- 606               	.L__stack_usage = 2
- 607               	.LM83:
- 608 0268 1092 0000 		sts recv_buffer+6,__zero_reg__
- 609               	.LM84:
- 610 026c 88E1      		ldi r24,lo8(24)
- 611               	/* #APP */
- 612               	 ;  130 "main.c" 1
- 613 026e 0FB6      		in __tmp_reg__, __SREG__
- 614 0270 F894      		cli
- 615 0272 8093 6000 		sts 96, r24
- 616 0276 1092 6000 		sts 96, __zero_reg__
- 617 027a 0FBE      		out __SREG__,__tmp_reg__
- 618               		
- 619               	 ;  0 "" 2
- 620               	.LM85:
- 621               	/* #NOAPP */
- 622 027c 0E94 0000 		call usart0_init
- 623               	.LM86:
- 624               	/* #APP */
- 625               	 ;  133 "main.c" 1
- 626 0280 7894      		sei
- 627               	 ;  0 "" 2
- 628               	.LM87:
- 629               	/* #NOAPP */
- 630 0282 539A      		sbi 42-32,3
- 631               	.LM88:
- 632 0284 549A      		sbi 42-32,4
- 633               	.LM89:
- 634 0286 559A      		sbi 42-32,5
+ 402               	.LM55:
+ 403 018c 099A      		sbi 33-32,1
+ 404               	.LM56:
+ 405 018e 119A      		sbi 34-32,1
+ 406               	/* epilogue start */
+ 407               	.LM57:
+ 408 0190 0895      		ret
+ 409               	.LFE14:
+ 411               	.global	home_laser
+ 413               	home_laser:
+ 414               	.LFB15:
+ 415               	.LM58:
+ 416               	/* prologue: function */
+ 417               	/* frame size = 0 */
+ 418               	/* stack size = 0 */
+ 419               	.L__stack_usage = 0
+ 420               	.LM59:
+ 421 0192 00C0      		rjmp .L21
+ 422               	.L22:
+ 423               	.LM60:
+ 424 0194 0E94 0000 		call step_laser_left
+ 425               	.LVL28:
+ 426               	.LBB45:
+ 427               	.LBB46:
+ 428               	.LM61:
+ 429 0198 8FE9      		 ldi r24,lo8(3999)
+ 430 019a 9FE0      	    ldi r25,hi8(3999)
+ 431 019c 0197      	    1:sbiw r24,1
+ 432 019e 01F4      	    brne 1b
+ 433 01a0 00C0      		rjmp .
+ 434 01a2 0000      		nop
+ 435               	.LVL29:
+ 436               	.L21:
+ 437               	.LBE46:
+ 438               	.LBE45:
+ 439               	.LM62:
+ 440 01a4 0099      		sbic 32-32,0
+ 441 01a6 00C0      		rjmp .L22
+ 442               	.LM63:
+ 443 01a8 1092 0000 		sts laser_pos,__zero_reg__
+ 444 01ac 1092 0000 		sts laser_pos+1,__zero_reg__
+ 445 01b0 1092 0000 		sts laser_pos+2,__zero_reg__
+ 446 01b4 1092 0000 		sts laser_pos+3,__zero_reg__
+ 447               	/* epilogue start */
+ 448               	.LM64:
+ 449 01b8 0895      		ret
+ 450               	.LFE15:
+ 452               		.data
+ 453               	.LC0:
+ 454 0000 5072 6F63 		.string	"Processing message home\r\n"
+ 454      6573 7369 
+ 454      6E67 206D 
+ 454      6573 7361 
+ 454      6765 2068 
+ 455               	.LC1:
+ 456 001a 7265 6376 		.string	"recv_buffer: "
+ 456      5F62 7566 
+ 456      6665 723A 
+ 456      2000 
+ 457               	.LC2:
+ 458 0028 0D0A 00   		.string	"\r\n"
+ 459               	.LC3:
+ 460 002b 486F 6D69 		.string	"Homing laser\r\n"
+ 460      6E67 206C 
+ 460      6173 6572 
+ 460      0D0A 00
+ 461               	.LC4:
+ 462 003a 4C61 7365 		.string	"Laser homed\r\n"
+ 462      7220 686F 
+ 462      6D65 640D 
+ 462      0A00 
+ 463               		.text
+ 464               	.global	process_home
+ 466               	process_home:
+ 467               	.LFB16:
+ 468               	.LM65:
+ 469               	/* prologue: function */
+ 470               	/* frame size = 0 */
+ 471               	/* stack size = 0 */
+ 472               	.L__stack_usage = 0
+ 473               	.LM66:
+ 474 01ba 80E0      		ldi r24,lo8(.LC0)
+ 475 01bc 90E0      		ldi r25,hi8(.LC0)
+ 476 01be 0E94 0000 		call usart0_puts
+ 477               	.LM67:
+ 478 01c2 80E0      		ldi r24,lo8(.LC1)
+ 479 01c4 90E0      		ldi r25,hi8(.LC1)
+ 480 01c6 0E94 0000 		call usart0_puts
+ 481               	.LM68:
+ 482 01ca 80E0      		ldi r24,lo8(recv_buffer)
+ 483 01cc 90E0      		ldi r25,hi8(recv_buffer)
+ 484 01ce 0E94 0000 		call usart0_puts
+ 485               	.LM69:
+ 486 01d2 80E0      		ldi r24,lo8(.LC2)
+ 487 01d4 90E0      		ldi r25,hi8(.LC2)
+ 488 01d6 0E94 0000 		call usart0_puts
+ 489               	.LVL30:
+ 490 01da 80E0      		ldi r24,lo8(0)
+ 491 01dc 90E0      		ldi r25,hi8(0)
+ 492               	.LVL31:
+ 493               	.L25:
+ 494               	.LBB47:
+ 495               	.LM70:
+ 496 01de FC01      		movw r30,r24
+ 497 01e0 E050      		subi r30,lo8(-(recv_buffer))
+ 498 01e2 F040      		sbci r31,hi8(-(recv_buffer))
+ 499 01e4 2081      		ld r18,Z
+ 500 01e6 2834      		cpi r18,lo8(72)
+ 501 01e8 01F4      		brne .L23
+ 502 01ea 0196      		adiw r24,1
+ 503               	.LM71:
+ 504 01ec 8630      		cpi r24,6
+ 505 01ee 9105      		cpc r25,__zero_reg__
+ 506 01f0 01F4      		brne .L25
+ 507               	.LBE47:
+ 508               	.LM72:
+ 509 01f2 80E0      		ldi r24,lo8(.LC3)
+ 510 01f4 90E0      		ldi r25,hi8(.LC3)
+ 511 01f6 0E94 0000 		call usart0_puts
+ 512               	.LM73:
+ 513 01fa 0E94 0000 		call home_laser
+ 514               	.LM74:
+ 515 01fe 80E0      		ldi r24,lo8(.LC4)
+ 516 0200 90E0      		ldi r25,hi8(.LC4)
+ 517 0202 0E94 0000 		call usart0_puts
+ 518               	.L23:
+ 519 0206 0895      		ret
+ 520               	.LFE16:
+ 522               		.data
+ 523               	.LC5:
+ 524 0048 4E65 7720 		.string	"New laser destination set\r\n"
+ 524      6C61 7365 
+ 524      7220 6465 
+ 524      7374 696E 
+ 524      6174 696F 
+ 525               		.text
+ 526               	.global	process_laser
+ 528               	process_laser:
+ 529               	.LFB17:
+ 530               	.LM75:
+ 531               	/* prologue: function */
+ 532               	/* frame size = 0 */
+ 533               	/* stack size = 0 */
+ 534               	.L__stack_usage = 0
+ 535               	.LM76:
+ 536 0208 2091 0000 		lds r18,recv_buffer+4
+ 537 020c 8091 0000 		lds r24,recv_buffer+3
+ 538 0210 90E0      		ldi r25,lo8(0)
+ 539 0212 A0E0      		ldi r26,lo8(0)
+ 540 0214 B0E0      		ldi r27,hi8(0)
+ 541 0216 BA2F      		mov r27,r26
+ 542 0218 A92F      		mov r26,r25
+ 543 021a 982F      		mov r25,r24
+ 544 021c 8827      		clr r24
+ 545 021e 30E0      		ldi r19,lo8(0)
+ 546 0220 40E0      		ldi r20,lo8(0)
+ 547 0222 50E0      		ldi r21,hi8(0)
+ 548 0224 822B      		or r24,r18
+ 549 0226 932B      		or r25,r19
+ 550 0228 A42B      		or r26,r20
+ 551 022a B52B      		or r27,r21
+ 552 022c 8093 0000 		sts laser_dest,r24
+ 553 0230 9093 0000 		sts laser_dest+1,r25
+ 554 0234 A093 0000 		sts laser_dest+2,r26
+ 555 0238 B093 0000 		sts laser_dest+3,r27
+ 556               	.LM77:
+ 557 023c 80E0      		ldi r24,lo8(.LC5)
+ 558 023e 90E0      		ldi r25,hi8(.LC5)
+ 559 0240 0E94 0000 		call usart0_puts
+ 560               	/* epilogue start */
+ 561               	.LM78:
+ 562 0244 0895      		ret
+ 563               	.LFE17:
+ 565               		.data
+ 566               	.LC6:
+ 567 0064 5072 6F63 		.string	"Processing message\r\n"
+ 567      6573 7369 
+ 567      6E67 206D 
+ 567      6573 7361 
+ 567      6765 0D0A 
+ 568               		.text
+ 569               	.global	process_message
+ 571               	process_message:
+ 572               	.LFB18:
+ 573               	.LM79:
+ 574               	/* prologue: function */
+ 575               	/* frame size = 0 */
+ 576               	/* stack size = 0 */
+ 577               	.L__stack_usage = 0
+ 578               	.LM80:
+ 579 0246 80E0      		ldi r24,lo8(.LC6)
+ 580 0248 90E0      		ldi r25,hi8(.LC6)
+ 581 024a 0E94 0000 		call usart0_puts
+ 582               	.LM81:
+ 583 024e 8091 0000 		lds r24,recv_buffer
+ 584 0252 8834      		cpi r24,lo8(72)
+ 585 0254 01F0      		breq .L30
+ 586 0256 8C34      		cpi r24,lo8(76)
+ 587 0258 01F4      		brne .L28
+ 588 025a 00C0      		rjmp .L32
+ 589               	.L30:
+ 590               	.LM82:
+ 591 025c 0E94 0000 		call process_home
+ 592 0260 0895      		ret
+ 593               	.L32:
+ 594               	.LM83:
+ 595 0262 0E94 0000 		call process_laser
+ 596               	.L28:
+ 597 0266 0895      		ret
+ 598               	.LFE18:
+ 600               	.global	main
+ 602               	main:
+ 603               	.LFB19:
+ 604               	.LM84:
+ 605 0268 CF93      		push r28
+ 606 026a DF93      		push r29
+ 607               	/* prologue: function */
+ 608               	/* frame size = 0 */
+ 609               	/* stack size = 2 */
+ 610               	.L__stack_usage = 2
+ 611               	.LM85:
+ 612 026c 1092 0000 		sts recv_buffer+6,__zero_reg__
+ 613               	.LM86:
+ 614 0270 88E1      		ldi r24,lo8(24)
+ 615               	/* #APP */
+ 616               	 ;  134 "main.c" 1
+ 617 0272 0FB6      		in __tmp_reg__, __SREG__
+ 618 0274 F894      		cli
+ 619 0276 8093 6000 		sts 96, r24
+ 620 027a 1092 6000 		sts 96, __zero_reg__
+ 621 027e 0FBE      		out __SREG__,__tmp_reg__
+ 622               		
+ 623               	 ;  0 "" 2
+ 624               	.LM87:
+ 625               	/* #NOAPP */
+ 626 0280 0E94 0000 		call usart0_init
+ 627               	.LM88:
+ 628               	/* #APP */
+ 629               	 ;  137 "main.c" 1
+ 630 0284 7894      		sei
+ 631               	 ;  0 "" 2
+ 632               	.LM89:
+ 633               	/* #NOAPP */
+ 634 0286 539A      		sbi 42-32,3
  635               	.LM90:
- 636 0288 569A      		sbi 42-32,6
+ 636 0288 549A      		sbi 42-32,4
  637               	.LM91:
- 638 028a 0E94 0000 		call setup_inputs
- 639               	.L37:
- 640               	.LM92:
- 641 028e 2091 0000 		lds r18,laser_pos
- 642 0292 3091 0000 		lds r19,laser_pos+1
- 643 0296 4091 0000 		lds r20,laser_pos+2
- 644 029a 5091 0000 		lds r21,laser_pos+3
- 645 029e 8091 0000 		lds r24,laser_dest
- 646 02a2 9091 0000 		lds r25,laser_dest+1
- 647 02a6 A091 0000 		lds r26,laser_dest+2
- 648 02aa B091 0000 		lds r27,laser_dest+3
- 649 02ae 2817      		cp r18,r24
- 650 02b0 3907      		cpc r19,r25
- 651 02b2 4A07      		cpc r20,r26
- 652 02b4 5B07      		cpc r21,r27
- 653 02b6 04F4      		brge .L34
- 654               	.LM93:
- 655 02b8 0E94 0000 		call step_laser_right
- 656               	.LM94:
- 657 02bc 82E7      		ldi r24,lo8(114)
- 658 02be 0E94 0000 		call usart0_putc
- 659               	.L34:
- 660               	.LM95:
- 661 02c2 2091 0000 		lds r18,laser_pos
- 662 02c6 3091 0000 		lds r19,laser_pos+1
- 663 02ca 4091 0000 		lds r20,laser_pos+2
- 664 02ce 5091 0000 		lds r21,laser_pos+3
- 665 02d2 8091 0000 		lds r24,laser_dest
- 666 02d6 9091 0000 		lds r25,laser_dest+1
- 667 02da A091 0000 		lds r26,laser_dest+2
- 668 02de B091 0000 		lds r27,laser_dest+3
- 669 02e2 8217      		cp r24,r18
- 670 02e4 9307      		cpc r25,r19
- 671 02e6 A407      		cpc r26,r20
- 672 02e8 B507      		cpc r27,r21
- 673 02ea 04F4      		brge .L35
- 674               	.LM96:
- 675 02ec 0E94 0000 		call step_laser_left
- 676               	.LM97:
- 677 02f0 8CE6      		ldi r24,lo8(108)
- 678 02f2 0E94 0000 		call usart0_putc
- 679               	.L35:
- 680               	.LM98:
- 681 02f6 0E94 0000 		call usart0_hasc
- 682 02fa 8823      		tst r24
- 683 02fc 01F0      		breq .L36
- 684               	.LM99:
- 685 02fe C091 0000 		lds r28,recv_counter
- 686 0302 DD27      		clr r29
- 687 0304 C7FD      		sbrc r28,7
- 688 0306 D095      		com r29
- 689 0308 0E94 0000 		call usart0_getc
- 690 030c C050      		subi r28,lo8(-(recv_buffer))
- 691 030e D040      		sbci r29,hi8(-(recv_buffer))
- 692 0310 8883      		st Y,r24
- 693               	.LM100:
- 694 0312 E091 0000 		lds r30,recv_counter
- 695 0316 FF27      		clr r31
- 696 0318 E7FD      		sbrc r30,7
- 697 031a F095      		com r31
- 698 031c E050      		subi r30,lo8(-(recv_buffer))
- 699 031e F040      		sbci r31,hi8(-(recv_buffer))
- 700 0320 8081      		ld r24,Z
- 701 0322 0E94 0000 		call usart0_putc
- 702               	.LM101:
- 703 0326 80E2      		ldi r24,lo8(32)
- 704 0328 0E94 0000 		call usart0_putc
- 705               	.LM102:
- 706 032c 8091 0000 		lds r24,recv_counter
- 707 0330 8F5B      		subi r24,lo8(-(65))
- 708 0332 0E94 0000 		call usart0_putc
- 709               	.LM103:
- 710 0336 80E0      		ldi r24,lo8(.LC2)
- 711 0338 90E0      		ldi r25,hi8(.LC2)
- 712 033a 0E94 0000 		call usart0_puts
- 713               	.LM104:
- 714 033e 8091 0000 		lds r24,recv_counter
- 715 0342 8F5F      		subi r24,lo8(-(1))
- 716 0344 8093 0000 		sts recv_counter,r24
- 717               	.LM105:
- 718 0348 8091 0000 		lds r24,recv_counter
- 719 034c 8630      		cpi r24,lo8(6)
- 720 034e 01F4      		brne .L36
- 721               	.LM106:
- 722 0350 0E94 0000 		call process_message
- 723               	.LM107:
- 724 0354 1092 0000 		sts recv_counter,__zero_reg__
- 725               	.L36:
- 726               	.LVL32:
- 727               	.LBB48:
- 728               	.LBB49:
- 729               	.LM108:
- 730 0358 8FE9      		 ldi r24,lo8(3999)
- 731 035a 9FE0      	    ldi r25,hi8(3999)
- 732 035c 0197      	    1:sbiw r24,1
- 733 035e 01F4      	    brne 1b
- 734 0360 00C0      		rjmp .
- 735 0362 0000      		nop
- 736 0364 00C0      		rjmp .L37
- 737               	.LBE49:
- 738               	.LBE48:
- 739               	.LFE19:
- 741               	.global	laser_pos
- 742               	.global	laser_pos
- 743               		.section .bss
- 746               	laser_pos:
- 747 0000 0000 0000 		.skip 4,0
- 748               	.global	turn_pos
- 749               	.global	turn_pos
- 752               	turn_pos:
- 753 0004 0000 0000 		.skip 4,0
- 754               	.global	laser_dest
- 755               	.global	laser_dest
- 758               	laser_dest:
- 759 0008 0000 0000 		.skip 4,0
- 760               	.global	turn_dest
- 761               	.global	turn_dest
- 764               	turn_dest:
- 765 000c 0000 0000 		.skip 4,0
- 766               	.global	recv_counter
- 767               	.global	recv_counter
- 770               	recv_counter:
- 771 0010 00        		.skip 1,0
- 772               		.comm recv_buffer,7,1
- 773               		.data
- 776               	CSWTCH.22:
- 777 0079 30        		.byte	48
- 778 007a 31        		.byte	49
- 779 007b 32        		.byte	50
- 780 007c 33        		.byte	51
- 781 007d 34        		.byte	52
- 782 007e 35        		.byte	53
- 783 007f 36        		.byte	54
- 784 0080 37        		.byte	55
- 785 0081 38        		.byte	56
- 786 0082 39        		.byte	57
- 787 0083 61        		.byte	97
- 788 0084 62        		.byte	98
- 789 0085 63        		.byte	99
- 790 0086 64        		.byte	100
- 791 0087 65        		.byte	101
- 920               	.Letext0:
+ 638 028a 559A      		sbi 42-32,5
+ 639               	.LM92:
+ 640 028c 569A      		sbi 42-32,6
+ 641               	.LM93:
+ 642 028e 0E94 0000 		call setup_inputs
+ 643               	.L37:
+ 644               	.LM94:
+ 645 0292 2091 0000 		lds r18,laser_pos
+ 646 0296 3091 0000 		lds r19,laser_pos+1
+ 647 029a 4091 0000 		lds r20,laser_pos+2
+ 648 029e 5091 0000 		lds r21,laser_pos+3
+ 649 02a2 8091 0000 		lds r24,laser_dest
+ 650 02a6 9091 0000 		lds r25,laser_dest+1
+ 651 02aa A091 0000 		lds r26,laser_dest+2
+ 652 02ae B091 0000 		lds r27,laser_dest+3
+ 653 02b2 2817      		cp r18,r24
+ 654 02b4 3907      		cpc r19,r25
+ 655 02b6 4A07      		cpc r20,r26
+ 656 02b8 5B07      		cpc r21,r27
+ 657 02ba 04F4      		brge .L34
+ 658               	.LM95:
+ 659 02bc 0E94 0000 		call step_laser_right
+ 660               	.LM96:
+ 661 02c0 82E7      		ldi r24,lo8(114)
+ 662 02c2 0E94 0000 		call usart0_putc
+ 663               	.L34:
+ 664               	.LM97:
+ 665 02c6 2091 0000 		lds r18,laser_pos
+ 666 02ca 3091 0000 		lds r19,laser_pos+1
+ 667 02ce 4091 0000 		lds r20,laser_pos+2
+ 668 02d2 5091 0000 		lds r21,laser_pos+3
+ 669 02d6 8091 0000 		lds r24,laser_dest
+ 670 02da 9091 0000 		lds r25,laser_dest+1
+ 671 02de A091 0000 		lds r26,laser_dest+2
+ 672 02e2 B091 0000 		lds r27,laser_dest+3
+ 673 02e6 8217      		cp r24,r18
+ 674 02e8 9307      		cpc r25,r19
+ 675 02ea A407      		cpc r26,r20
+ 676 02ec B507      		cpc r27,r21
+ 677 02ee 04F4      		brge .L35
+ 678               	.LM98:
+ 679 02f0 0E94 0000 		call step_laser_left
+ 680               	.LM99:
+ 681 02f4 8CE6      		ldi r24,lo8(108)
+ 682 02f6 0E94 0000 		call usart0_putc
+ 683               	.L35:
+ 684               	.LM100:
+ 685 02fa 0E94 0000 		call usart0_hasc
+ 686 02fe 8823      		tst r24
+ 687 0300 01F0      		breq .L36
+ 688               	.LM101:
+ 689 0302 C091 0000 		lds r28,recv_counter
+ 690 0306 DD27      		clr r29
+ 691 0308 C7FD      		sbrc r28,7
+ 692 030a D095      		com r29
+ 693 030c 0E94 0000 		call usart0_getc
+ 694 0310 C050      		subi r28,lo8(-(recv_buffer))
+ 695 0312 D040      		sbci r29,hi8(-(recv_buffer))
+ 696 0314 8883      		st Y,r24
+ 697               	.LM102:
+ 698 0316 E091 0000 		lds r30,recv_counter
+ 699 031a FF27      		clr r31
+ 700 031c E7FD      		sbrc r30,7
+ 701 031e F095      		com r31
+ 702 0320 E050      		subi r30,lo8(-(recv_buffer))
+ 703 0322 F040      		sbci r31,hi8(-(recv_buffer))
+ 704 0324 8081      		ld r24,Z
+ 705 0326 0E94 0000 		call usart0_putc
+ 706               	.LM103:
+ 707 032a 80E2      		ldi r24,lo8(32)
+ 708 032c 0E94 0000 		call usart0_putc
+ 709               	.LM104:
+ 710 0330 8091 0000 		lds r24,recv_counter
+ 711 0334 8F5B      		subi r24,lo8(-(65))
+ 712 0336 0E94 0000 		call usart0_putc
+ 713               	.LM105:
+ 714 033a 80E0      		ldi r24,lo8(.LC2)
+ 715 033c 90E0      		ldi r25,hi8(.LC2)
+ 716 033e 0E94 0000 		call usart0_puts
+ 717               	.LM106:
+ 718 0342 8091 0000 		lds r24,recv_counter
+ 719 0346 8F5F      		subi r24,lo8(-(1))
+ 720 0348 8093 0000 		sts recv_counter,r24
+ 721               	.LM107:
+ 722 034c 8091 0000 		lds r24,recv_counter
+ 723 0350 8630      		cpi r24,lo8(6)
+ 724 0352 01F4      		brne .L36
+ 725               	.LM108:
+ 726 0354 0E94 0000 		call process_message
+ 727               	.LM109:
+ 728 0358 1092 0000 		sts recv_counter,__zero_reg__
+ 729               	.L36:
+ 730               	.LVL32:
+ 731               	.LBB48:
+ 732               	.LBB49:
+ 733               	.LM110:
+ 734 035c 8FE9      		 ldi r24,lo8(3999)
+ 735 035e 9FE0      	    ldi r25,hi8(3999)
+ 736 0360 0197      	    1:sbiw r24,1
+ 737 0362 01F4      	    brne 1b
+ 738 0364 00C0      		rjmp .
+ 739 0366 0000      		nop
+ 740 0368 00C0      		rjmp .L37
+ 741               	.LBE49:
+ 742               	.LBE48:
+ 743               	.LFE19:
+ 745               	.global	laser_pos
+ 746               	.global	laser_pos
+ 747               		.section .bss
+ 750               	laser_pos:
+ 751 0000 0000 0000 		.skip 4,0
+ 752               	.global	turn_pos
+ 753               	.global	turn_pos
+ 756               	turn_pos:
+ 757 0004 0000 0000 		.skip 4,0
+ 758               	.global	laser_dest
+ 759               	.global	laser_dest
+ 762               	laser_dest:
+ 763 0008 0000 0000 		.skip 4,0
+ 764               	.global	turn_dest
+ 765               	.global	turn_dest
+ 768               	turn_dest:
+ 769 000c 0000 0000 		.skip 4,0
+ 770               	.global	recv_counter
+ 771               	.global	recv_counter
+ 774               	recv_counter:
+ 775 0010 00        		.skip 1,0
+ 776               		.comm recv_buffer,7,1
+ 777               		.data
+ 780               	CSWTCH.22:
+ 781 0079 30        		.byte	48
+ 782 007a 31        		.byte	49
+ 783 007b 32        		.byte	50
+ 784 007c 33        		.byte	51
+ 785 007d 34        		.byte	52
+ 786 007e 35        		.byte	53
+ 787 007f 36        		.byte	54
+ 788 0080 37        		.byte	55
+ 789 0081 38        		.byte	56
+ 790 0082 39        		.byte	57
+ 791 0083 61        		.byte	97
+ 792 0084 62        		.byte	98
+ 793 0085 63        		.byte	99
+ 794 0086 64        		.byte	100
+ 795 0087 65        		.byte	101
+ 924               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-     /tmp/ccXIk0mv.s:2      *ABS*:0000003f __SREG__
-     /tmp/ccXIk0mv.s:3      *ABS*:0000003e __SP_H__
-     /tmp/ccXIk0mv.s:4      *ABS*:0000003d __SP_L__
-     /tmp/ccXIk0mv.s:5      *ABS*:00000034 __CCP__
-     /tmp/ccXIk0mv.s:6      *ABS*:00000000 __tmp_reg__
-     /tmp/ccXIk0mv.s:7      *ABS*:00000001 __zero_reg__
-     /tmp/ccXIk0mv.s:18     .text:00000000 uart_put_hex_helper
-     /tmp/ccXIk0mv.s:776    .data:00000079 CSWTCH.22
-     /tmp/ccXIk0mv.s:46     .text:00000014 uart_put_hexc
-     /tmp/ccXIk0mv.s:104    .text:0000004e uart_put_hex
-     /tmp/ccXIk0mv.s:158    .text:00000086 usart0_puts
-     /tmp/ccXIk0mv.s:191    .text:000000a0 step_laser_left
-     /tmp/ccXIk0mv.s:746    .bss:00000000 laser_pos
-     /tmp/ccXIk0mv.s:241    .text:000000da step_laser_right
-     /tmp/ccXIk0mv.s:291    .text:00000114 step_turntable_right
-     /tmp/ccXIk0mv.s:752    .bss:00000004 turn_pos
-     /tmp/ccXIk0mv.s:341    .text:0000014e step_turntable_left
-     /tmp/ccXIk0mv.s:391    .text:00000188 setup_inputs
-     /tmp/ccXIk0mv.s:409    .text:0000018e home_laser
-     /tmp/ccXIk0mv.s:462    .text:000001b6 process_home
+     /tmp/ccBaFD8o.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccBaFD8o.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccBaFD8o.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccBaFD8o.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccBaFD8o.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccBaFD8o.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccBaFD8o.s:18     .text:00000000 uart_put_hex_helper
+     /tmp/ccBaFD8o.s:780    .data:00000079 CSWTCH.22
+     /tmp/ccBaFD8o.s:46     .text:00000014 uart_put_hexc
+     /tmp/ccBaFD8o.s:104    .text:0000004e uart_put_hex
+     /tmp/ccBaFD8o.s:158    .text:00000086 usart0_puts
+     /tmp/ccBaFD8o.s:191    .text:000000a0 step_laser_left
+     /tmp/ccBaFD8o.s:750    .bss:00000000 laser_pos
+     /tmp/ccBaFD8o.s:241    .text:000000da step_laser_right
+     /tmp/ccBaFD8o.s:291    .text:00000114 step_turntable_right
+     /tmp/ccBaFD8o.s:756    .bss:00000004 turn_pos
+     /tmp/ccBaFD8o.s:341    .text:0000014e step_turntable_left
+     /tmp/ccBaFD8o.s:391    .text:00000188 setup_inputs
+     /tmp/ccBaFD8o.s:413    .text:00000192 home_laser
+     /tmp/ccBaFD8o.s:466    .text:000001ba process_home
                             *COM*:00000007 recv_buffer
-     /tmp/ccXIk0mv.s:524    .text:00000204 process_laser
-     /tmp/ccXIk0mv.s:758    .bss:00000008 laser_dest
-     /tmp/ccXIk0mv.s:567    .text:00000242 process_message
-     /tmp/ccXIk0mv.s:598    .text:00000264 main
-     /tmp/ccXIk0mv.s:770    .bss:00000010 recv_counter
-     /tmp/ccXIk0mv.s:764    .bss:0000000c turn_dest
+     /tmp/ccBaFD8o.s:528    .text:00000208 process_laser
+     /tmp/ccBaFD8o.s:762    .bss:00000008 laser_dest
+     /tmp/ccBaFD8o.s:571    .text:00000246 process_message
+     /tmp/ccBaFD8o.s:602    .text:00000268 main
+     /tmp/ccBaFD8o.s:774    .bss:00000010 recv_counter
+     /tmp/ccBaFD8o.s:768    .bss:0000000c turn_dest
 
 UNDEFINED SYMBOLS
 usart0_putc
